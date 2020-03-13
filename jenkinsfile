@@ -9,4 +9,8 @@ node {
         bat'"C:\\Program Files (x86)\\MSBuild\\14.0\\Bin\\MSBuild.exe" SeleniumNUnitParam.sln /p:Configuration=Debug /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}'
         
     }
+    stage('test'){
+    bat '"C:\\Program Files (x86)\\NUnit.org\\nunit-console\\nunit3-console.exe" SeleniumNUnitParam/bin/Debug/SeleniumNUnitParam.dll'
+       
+}
 }
