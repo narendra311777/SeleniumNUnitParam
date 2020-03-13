@@ -1,0 +1,12 @@
+node {
+    stage('Checkout git repo') {
+      git url : 'https://github.com/narendra311777/SeleniumNUnitParam.git', branch: 'master'
+    }
+    stage('restore'){
+        bat'"C:\\ProgramData\\chocolatey\\bin\\nuget.exe"  restore SeleniumNUnitParam.sln"'
+    }
+    stage('Build'){
+        bat'"C:\\Program Files (x86)\\MSBuild\\14.0\\Bin\\MSBuild.exe" SeleniumNUnitParam.sln /p:Configuration=Debug /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}'
+        
+    }
+}
