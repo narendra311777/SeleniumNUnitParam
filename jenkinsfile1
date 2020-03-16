@@ -1,0 +1,49 @@
+pipeline{
+    agent any
+    
+    environment {
+        dotnet ='C:\\Program Files\\dotnet\\'
+        }
+        
+    triggers {
+        pollSCM 'H * * * *'
+    }
+stages{
+ stage('Checkout') {
+    steps {
+     git url: 'https://github.com/narendra311777/pipelines-dotnet-core.git', branch: 'master'
+     }
+  }
+ stage('Restore packages'){
+   steps{
+      bat "dotnet restore pipelines-dotnet-core/pipelines-dotnet-core.cspro"
+     }
+  }
+ stage('Clean'){
+    steps{
+        bat "dotnet clean pipelines-dotnet-core/pipelines-dotnet-core.cspro"
+     }
+   }
+ stage('Build'){
+   steps{
+      bat "dotnet build pipelines-dotnet-core/pipelines-dotnet-core.cspro --configuration Release"
+    }
+ }
+ stage('Test: Unit Test'){
+   steps {
+     bat "dotnet test pipelines-dotnet-core/pipelines-dotnet-core.cspro"
+     }
+  }
+       
+ stage('Test: Integration Test'){
+    steps {
+       bat "dotnet test pipelines-dotnet-core/pipelines-dotnet-core.cspro"
+      }
+   }
+ stage('Publish'){
+     steps{
+       bat "dotnet publish pipelines-dotnet-core/pipelines-dotnet-core.cspro "
+     }
+    }
+}
+}
